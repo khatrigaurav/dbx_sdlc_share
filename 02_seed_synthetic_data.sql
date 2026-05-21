@@ -4,6 +4,7 @@
 --
 -- Run this once. Re-run wipes and re-seeds.
 
+CREATE CATALOG IF NOT EXISTS gaurav_catalog;
 CREATE SCHEMA IF NOT EXISTS gaurav_catalog.docusign_demo;
 CREATE table IF NOT EXISTS gaurav_catalog.docusign_demo.controls;
 
