@@ -22,7 +22,6 @@ A PR that fails any check produces a **control violation** → evidence record i
 
 | File | What it does |
 |---|---|
-| `01_connectors.md` | Lakeflow Connect setup for GitHub + Jira (auth, schemas, sync mode) |
 | `02_seed_synthetic_data.sql` | Seeds 20 PRs + Jira tickets covering all pass/fail cases so the demo runs without real creds |
 | `03_control_test.sql` | The attestation logic — joins, checks, emits `passed/failed/reason` rows |
 | `04_push_servicenow.py` | Databricks notebook: reads failures, POSTs to ServiceNow `/api/now/table/incident` (default — universally available). Has `MOCK_MODE = True` for demos without a live SN instance. |
