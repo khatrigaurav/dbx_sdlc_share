@@ -22,17 +22,8 @@ If/when you demo against a customer instance that has IRM/GRC installed, switch 
 
 Open `https://devXXXXXX.service-now.com/incident_list.do` — you'll see the standard incident list (might be empty or have a few sample tickets). Nothing to install.
 
-## 3. (Optional) Create a small set of demo users
 
-`assigned_to` in the payload uses the GitHub username from the seed data (`alice`, `bob`, `carol`, etc.). For the prettiest screen, create matching ServiceNow users so the field resolves to a real person instead of a raw string.
-
-1. **All → Users** (or `/sys_user_list.do`) → **New**.
-2. User ID: `alice`, First name: `Alice`, Last name: `Demo`. Save.
-3. Repeat for the other usernames you expect to see in failures (`bob`, `carol`, `dave`, `eve`, `frank`, `grace`, `heidi`).
-
-Totally skippable — if the user doesn't exist, ServiceNow stores the string in the field and the demo still works. Just looks slightly less polished.
-
-## 4. Create the Databricks secret scope
+## 3. Create the Databricks secret scope
 
 From your laptop with the Databricks CLI configured to the demo workspace:
 
@@ -47,7 +38,7 @@ databricks secrets put-secret docusign-demo servicenow-password \
   --string-value "<password from step 1>"
 ```
 
-## 5. Flip the notebook to live mode
+## 4. Flip the notebook to live mode
 
 In `04_push_servicenow.py`:
 
@@ -57,21 +48,7 @@ MOCK_MODE = False
 
 Run it. You should see new `INCxxxxxxx` tickets appear at `https://devXXXXXX.service-now.com/incident_list.do`.
 
-## 6. Demo polish
 
-- Keep the incident list view open in a second tab. Refresh after the notebook runs so tickets pop in live.
-- Use this saved query in the list URL so only the demo tickets show:
-  ```
-  https://devXXXXXX.service-now.com/incident_list.do?sysparm_query=short_descriptionLIKESDLC-001
-  ```
-- Open one ticket → call out: **short_description**, **description** (the multi-line evidence), **assigned_to**, **due_date**, **correlation_id**. Click "Add work note" → narrate the workflow handoff.
-- Re-run the notebook with the same data → talk track: *"Notice it created zero new tickets — the `correlation_id` lookup made the push idempotent."*
-
-## 7. Talk track for the table choice
-
-> *"In Docusign's production instance these would land in `sn_grc_issue` under IRM. We're using the `incident` table here only because this is a vanilla developer instance — the integration pattern, the idempotency, and the closed-loop audit trail are identical. To go live in your environment we change one variable: `SN_TABLE = 'sn_grc_issue'`."*
-
----
 
 ## Switching to a real GRC table (customer prod or GRC-enabled sandbox)
 
