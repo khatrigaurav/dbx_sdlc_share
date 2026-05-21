@@ -1,9 +1,3 @@
-
-
-
-
-
-
 # SDLC Control Attestation Demo
 
 End-to-end demo for the DocuSign GRC engineering team: ingest GitHub + Jira via Lakeflow Connect, run a control test in Databricks, push evidence into ServiceNow IRM.
@@ -23,6 +17,18 @@ End-to-end demo for the DocuSign GRC engineering team: ingest GitHub + Jira via 
 4. At least one approver must be a member of the `code-owners` org team
 
 A PR that fails any check produces a **control violation** → evidence record in ServiceNow IRM with an owner and remediation SLA.
+
+## File map
+
+| File | What it does |
+|---|---|
+| `01_connectors.md` | Lakeflow Connect setup for GitHub + Jira (auth, schemas, sync mode) |
+| `02_seed_synthetic_data.sql` | Seeds 20 PRs + Jira tickets covering all pass/fail cases so the demo runs without real creds |
+| `03_control_test.sql` | The attestation logic — joins, checks, emits `passed/failed/reason` rows |
+| `04_push_servicenow.py` | Databricks notebook: reads failures, POSTs to ServiceNow `/api/now/table/incident` (default — universally available). Has `MOCK_MODE = True` for demos without a live SN instance. |
+| `SERVICENOW_SETUP.md` | Step-by-step for spinning up a free PDI, wiring secrets, and (optionally) switching to a real `sn_grc_issue` table. |
+| `sample_servicenow_responses.md` | Sample request/response pairs + UI mockup, for slides when you can't share a live SN screen |
+
 
 ## Architecture
 
