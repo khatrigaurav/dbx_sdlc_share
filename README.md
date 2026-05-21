@@ -12,7 +12,6 @@ End-to-end demo for the DocuSign GRC engineering team: ingest GitHub + Jira via 
 
 > Auditor: *"Prove every code change to a production system went through peer review, was tracked in a ticket, and was approved by the right people."*
 
-This is a real SOC 2 / ISO 27001 / SOX control. Today it's answered by humans pulling CSVs and stitching them together. This demo automates the loop end-to-end.
 
 ## The control under test
 
